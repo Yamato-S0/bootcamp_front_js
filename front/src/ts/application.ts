@@ -15,7 +15,7 @@ export class Application {
     tasks.sort((a: { id: number }, b: { id: number }) => {
       return a.id - b.id;
     });
-    
+
     tasks.forEach((task: { id: number; title: any; status: number }) => {
       const li = document.createElement("li");
       if (task.status === 1) {
@@ -26,7 +26,7 @@ export class Application {
       const div1 = document.createElement("div");
       div1.className = "task__btn";
       const div2 = document.createElement("div");
-      div2.dataset.test = "task-title";
+      div2.setAttribute("data-test", "task-title");
       div2.className = "task__title";
       div2.textContent = task.title;
       li.appendChild(div1);
