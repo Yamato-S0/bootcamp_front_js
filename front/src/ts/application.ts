@@ -15,6 +15,7 @@ export class Application {
     tasks.sort((a: { id: number }, b: { id: number }) => {
       return a.id - b.id;
     });
+    let maxId: number = 0;
 
     tasks.forEach((task: { id: number; title: any; status: number }) => {
       const li = document.createElement("li");
@@ -34,7 +35,52 @@ export class Application {
       if (ul) {
         ul.appendChild(li);
       }
+      maxId = task.id;
     });
+
+    //タスクを追加する処理
+    //フォームを送信したタイミングでタスクをDBに保存する
+    const form = document.querySelector("form");
+    if (form) {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const input = document.querySelector("input");
+        if (input) {
+          const title = input.value;
+          maxId += 1;
+          //タスクを追加する処理
+          const response = await fetch(`${process.env.API_URL}/tasks`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: maxId,
+              title: title,
+              status: 0,
+            }),
+          });
+          const task = await response.json();
+
+          //タスクをDOM操作してHTMLに表示する
+          const li = document.createElement("li");
+          li.className = "task task--todo";
+          const div1 = document.createElement("div");
+          div1.className = "task__btn";
+          const div2 = document.createElement("div");
+          div2.setAttribute("data-test", "task-title");
+          div2.className = "task__title";
+          div2.textContent = task.title;
+          li.appendChild(div1);
+          li.appendChild(div2);
+          if (ul) {
+            ul.appendChild(li);
+          }
+          //フォームの中身を空にする
+          input.value = "";
+        }
+      });
+    }
     return;
   };
 }
