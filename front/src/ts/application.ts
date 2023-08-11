@@ -104,6 +104,29 @@ export class Application {
         }
     });
     });
+
+    //clear all done tasksのボタンを押した時に、タスクのstatusが1のタスクを全て削除する処理
+    const clearAllDoneTasksButton = document.querySelector(".clear__btn");
+    if (clearAllDoneTasksButton) {
+      clearAllDoneTasksButton.addEventListener("click", async () => {
+        //タスクのstatusが1のタスクを全て削除する処理
+        await fetch(`${process.env.API_URL}/tasks`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            status: 1,
+          }),
+        });
+        //タスクのstatusが1のタスクを全て削除した後に、タスクを削除する処理
+        const donetasklist = document.querySelectorAll(".task--done");
+        donetasklist.forEach((donetask) => {
+          donetask.remove();
+        }
+        );
+      });
+    }
     return;
   };
 }

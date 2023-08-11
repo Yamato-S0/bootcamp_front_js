@@ -39,3 +39,13 @@ app.put("/tasks", async (req, res) => {
     res.json({ title });
 }
 );
+
+//特定のURLにリクエストが来た時に、DBのタスクを削除するルーティングを作成
+app.delete("/tasks", async (req, res) => {
+    //DBのタスクを削除
+    const db = await databaseManager.getInstance();
+    await db.run("DELETE FROM tasks WHERE status = 1");
+    //削除したタスクをJSONで返す
+    res.json({});
+}
+);
