@@ -81,6 +81,29 @@ export class Application {
         }
       });
     }
+    //taskをクリックした時に、タスクのstatusを1に変更する処理
+    const taskButtons = document.querySelectorAll(".task__btn");
+    taskButtons.forEach((taskButton) => {
+      taskButton.addEventListener("click", async () => {
+        const taskTitle = taskButton.nextElementSibling;
+        //タスクのstatusを1に変更する処理
+        await fetch(`${process.env.API_URL}/tasks/${taskTitle}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: taskTitle?.textContent,
+            status: 1,
+          }),
+        });
+        //タスクのstatusを変更した後に、タスクのスタイルを変更する処理
+        const taskli = taskButton.parentElement;
+        if (taskli) {
+          taskli.className = "task task--done";
+        }
+    });
+    });
     return;
   };
 }

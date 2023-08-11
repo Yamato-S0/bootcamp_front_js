@@ -27,3 +27,14 @@ app.post("/tasks", async (req, res) => {
     //追加したタスクをJSONで返す
     res.json({ id, title, status});
 });
+
+//特定のURLにリクエストが来た時に、DBのタスクを更新するルーティングを作成
+app.put("/tasks/:title", async (req, res) => {
+    //リクエストの中身を取得
+    const title = req.params.title;
+    const status = req.body.status;
+    //DBのタスクを更新
+    const db = await databaseManager.getInstance();
+    await db.run("UPDATE tasks SET status = ? WHERE title = ?", status, title);
+}
+);
