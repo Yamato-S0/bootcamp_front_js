@@ -8,7 +8,6 @@ app.use(express.json());
 
 //特定のURLにリクエストが来た時に、DBからタスクを取得してJSONで返すルーティングを作成
 app.get("/tasks", async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000')
     //DBからタスクを取得
     const db = await databaseManager.getInstance();
     const result = await db.all("SELECT * FROM tasks");
