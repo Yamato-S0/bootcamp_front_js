@@ -85,18 +85,18 @@ export class Application {
     const taskButtons = document.querySelectorAll(".task__btn");
     taskButtons.forEach((taskButton) => {
       taskButton.addEventListener("click", async () => {
-        const taskTitle = taskButton.nextElementSibling;
+        const taskTitle = taskButton.nextElementSibling?.textContent;
         //タスクのstatusを1に変更する処理
-        await fetch(`${process.env.API_URL}/tasks/${taskTitle}`, {
-          method: "POST",
+        await fetch(`${process.env.API_URL}/tasks` , {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: taskTitle?.textContent,
-            status: 1,
-          }),
-        });
+            },
+            body: JSON.stringify({
+              title: taskTitle,
+              status: 1,
+              }),
+              });
         //タスクのstatusを変更した後に、タスクのスタイルを変更する処理
         const taskli = taskButton.parentElement;
         if (taskli) {
