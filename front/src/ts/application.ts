@@ -127,15 +127,13 @@ export class Application {
         );
       });
     }
-    //最初に画面を読み込んだタイミングでウェルカムメッセージを表示する
+    //トップページ / にアクセスしたタイミングでアラートを表示
     //リロードした場合は表示しない
     //localStorageに表示済みかどうかを保存する
-    const welcomeMessage = localStorage.getItem("welcomeMessage");
-    if (welcomeMessage === null) {
-      const welcome = await fetch(`${process.env.API_URL}`);
-      const message = await welcome.text();
-      alert(message);
-      localStorage.setItem("welcomeMessage", "true");
+    const isAlerted = localStorage.getItem("isAlerted");
+    if (!isAlerted) {
+      alert("Welcome to TODO APP");
+      localStorage.setItem("isAlerted", "true");
     }
     return;
   };
