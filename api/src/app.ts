@@ -47,5 +47,9 @@ app.delete("/tasks", async (req, res) => {
     await db.run("DELETE FROM tasks WHERE status = 1");
     //削除したタスクをJSONで返す
     res.json({});
-}
-);
+});
+
+//特定のURLにリクエストが来た時に、ウェルカムメッセージを表示するルーティングを作成
+app.get("/", (req, res) => {
+    res.send("Welcome to TODO APP");
+});
