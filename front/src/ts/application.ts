@@ -130,10 +130,10 @@ export class Application {
     //トップページ / にアクセスしたタイミングでアラートを表示
     //リロードした場合は表示しない
     //localStorageに表示済みかどうかを保存する
-    const isAlerted = localStorage.getItem("isAlerted");
-    if (!isAlerted) {
+    const hasShownWelcomeMessage = localStorage.getItem("hasShownWelcomeMessage");
+    if (!hasShownWelcomeMessage) {
       alert("Welcome to TODO APP");
-      localStorage.setItem("isAlerted", "true");
+      localStorage.setItem("hasShownWelcomeMessage", "yes");
     }
     return;
   };
